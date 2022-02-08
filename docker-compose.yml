@@ -1,0 +1,44 @@
+version: '3.4'
+services: 
+  app: 
+    image: app
+    container_name: api-maspiscolas
+    restart: always
+    build: .
+    ports: 
+      - 3000:3000
+    volumes: ['./:/usr/src/app']
+    # external_links:
+    #   - mongo
+    networks:
+      - staging
+  mongo: 
+    container_name: mongo-cho
+    image: mongo
+    # environment:
+      # - MONGO_INITDB_DATABASE=db_maspiscolas
+      # - MONGO_INITDB_ROOT_USERNAME=root
+      # - MONGO_INITDB_ROOT_PASSWORD=root
+    env_file:
+        - .env
+    environment:
+      AUTH: "yes"
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    volumes:
+      # - ./.docker/mongodb/mongod.conf:/etc/mongod.conf
+      # - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+      # - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/init-mongo-js:ro
+      - ./.docker/mongodb/data/db/:/data/db/
+      - ./.docker/mongodb/data/log/:/var/log/mongodb/
+      # - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+      # - ./mongo-volume:/data/db
+    networks:
+      - staging
+    ports:
+      - '27017:27017'
+    # command: ["-f", "/etc/mongod.conf"]
+networks:
+    staging:
+        driver: bridge

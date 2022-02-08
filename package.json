@@ -1,0 +1,23 @@
+{
+  "name": "maspiscolas",
+  "version": "0.0.1",
+  "description": "e-commerce API",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "app": "^0.1.0",
+    "mongodb": "^4.3.0",
+    "twilio": "^3.73.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": "NODE_DEBUG=workers nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Benjamin Oholeguy",
+  "license": "ISC"
+}
